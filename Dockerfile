@@ -10,14 +10,17 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc libpq-dev git && \
     rm -rf /var/lib/apt/lists/*
 
-# Create and set the working directory
+RUN git config --global user.name "readme-bot"
+RUN git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
 WORKDIR /app
+COPY pyproject.toml .
+COPY src/ src/
 
-COPY . .
-
+RUN git config --global user.name "readme-bot"
+RUN git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 # Install Poetry and project dependencies
-RUN pip install uv && \
-    uv venv && \
-    uv pip install -r pyproject.toml
+RUN pip install uv && uv pip install -r pyproject.toml --system
 
-ENTRYPOINT ["uv", "run", "src/main.py"]
+# WORKDIR is overriden by Github Actions, so run full path
+ENTRYPOINT ["uv", "run", "/app/src/main.py"]

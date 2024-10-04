@@ -72,8 +72,10 @@ runs:
         python-version: '3.11'  
     - name: Install uv
       uses: astral-sh/setup-uv@v3
+    - name: Install Venv
+      run: uv venv
     - name: Install Dependencies
-      run: uv install
+      run: uv pip install -r pyproject.toml
     - name: Update README
       id: update-readme
       run: python src/main.py

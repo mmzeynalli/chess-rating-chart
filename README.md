@@ -3,7 +3,7 @@
 Chart your rating of Lichess or Chess.com
 
 Project was heavily inspired by [sciencepal](https://github.com/sciencepal/sciencepal), transformed code to Github Actions and added LiChess support.
-Code structure is inspired by [gautamkrishnar](https://github.com/gautamkrishnar/blog-post-workflow)
+Code structure is inspired by [gautamkrishnar](https://github.com/gautamkrishnar/blog-post-workflow).
 
 ## How to use
 
@@ -54,15 +54,15 @@ Code structure is inspired by [gautamkrishnar](https://github.com/gautamkrishnar
 
 So, you can pass multiple arguments to the `with` key:
 
-1. `CHESS_COM_TIME_CLASS`: which time class games of Chess.com to chart. Available values: `"daily", "rapid", "blitz", "bullet"`. Default: `"blitz"`
-2. `LICHESS_TIME_CLASS`: which time class games of Lichess to chart. Available values: `"ultraBullet", "bullet", "blitz", "rapid", "classical", "correspondence"`. Default: `"blitz"`
+1. `CHESS_COM_TIME_CLASS`: which time class games of Chess.com to chart. Available values: `"daily", "rapid", "blitz", "bullet"`. **Default**: `"blitz"`
+2. `LICHESS_TIME_CLASS`: which time class games of Lichess to chart. Available values: `"ultraBullet", "bullet", "blitz", "rapid", "classical", "correspondence"`. **Default**: `"blitz"`
 3. `LAST_N_GAMES`: How many last game to consider for plotting. Deafult value: `100`
-4. `RATING_CHART_HEIGHT`: Height of ascii plot. Default: `20`
-5. `PUSH_BRANCH_NAME`: To which branch to push. Default: main branch (`main` or `master`).
-6. `COMMIT_BY_ME`: Whether graph update commit should be from users name or github-action bot's. Default value: `False`.
-7. `COMMIT_MESSAGE`: Update commit message. Default: `""`
+4. `RATING_CHART_HEIGHT`: Height of ascii plot. **Default**: `20`
+5. `PUSH_BRANCH_NAME`: To which branch to push. **Default**: main branch (`main` or `master`).
+6. `COMMIT_BY_ME`: Whether graph update commit should be from users name or github-action bot's. **Default** value: `False`.
+7. `COMMIT_MESSAGE`: Update commit message. **Default**: `""`
 
-Here is my rating data:
+## My rating charts
 
 <!-- START_RATING_GRAPH:chess.com -->
 Chess.com rating chart for the last 100 games:

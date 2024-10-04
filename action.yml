@@ -1,0 +1,84 @@
+name: 'Profile Readme Chess Rating Chart'
+author: Miradil Zeynalli
+description: 'Show your rating progress!'
+
+inputs:
+  GH_TOKEN:
+    description: 'GitHub access token with Repo scope'
+    required: true
+    default: ${{ github.token }}
+
+  CHESS_COM_USERNAME:
+    description: 'Chess.com username'
+    required: false
+    default: ""
+
+  CHESS_COM_TIME_CLASS:
+    description: 'Chess.com time class to graph ("daily", "rapid", "blitz", "bullet")'
+    required: false
+    default: "blitz"
+
+  LICHESS_USERNAME:
+    description: 'Lichess username'
+    required: false
+    default: ""
+
+  LICHESS_TIME_CLASS:
+    description: 'Lichess time class to graph  ("ultraBullet", :, "blitz", "rapid", "classical", "correspondence")'
+    required: false
+    default: "blitz"
+  
+  LAST_N_GAMES:
+    description: 'Last N games to graph'
+    required: false
+    default: "100"
+
+  RATING_CHART_HEIGHT:
+    description: 'Chart height'
+    required: false
+    default: "20"
+
+  PUSH_BRANCH_NAME:
+    description: 'Push branch name'
+    required: false
+    default: "main"
+
+  COMMIT_BY_ME:
+    description: 'Whether to commit by user (True) or github-actions bot (False)'
+    required: false
+    default: "False"
+
+  COMMIT_MESSAGE:
+    description: 'Commit message'
+    required: false
+    default: "Updated the chess rating graph"
+
+  DEBUG_LOGGING:
+    description: 'Debug logging'
+    required: false
+    default: "False"
+    
+  DEBUG_RUN:
+    description: 'Debug run'
+    required: false
+    default: "False"
+
+runs:
+  using: 'ubuntu-latest'
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'  
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+    - name: Install Dependencies
+      run: uv install
+    - name: Update README
+      id: update-readme
+      run: python src/main.py
+
+branding:
+  icon: 'activity'
+  color: 'orange'
+

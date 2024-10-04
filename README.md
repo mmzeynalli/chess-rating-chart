@@ -1,12 +1,13 @@
 # chess-rating-chart
+
 Chart your rating of Lichess or Chess.com
 
-Project was heavily inspired by [sciencepal][https://github.com/sciencepal/sciencepal], transformed code to Github Actions and added LiChess support.
-Code structure is inspired by [gautamkrishnar][https://github.com/gautamkrishnar/blog-post-workflow]
+Project was heavily inspired by [sciencepal](https://github.com/sciencepal/sciencepal), transformed code to Github Actions and added LiChess support.
+Code structure is inspired by [gautamkrishnar](https://github.com/gautamkrishnar/blog-post-workflow)
 
 ## How to use
 
-1. Star this repo 😉 
+1. Star this repo 😉
 2. Add the following section to YOUR **README.md** file, you can give whatever title you want. Use right comments in your readme and workflow will replace this comment with graph.
    - Use `<!-- START_RATING_GRAPH:chess.com --><!-- END_RATING_GRAPH:chess.com -->` to show your Chess.com graph
    - Use `<!-- START_RATING_GRAPH:lichess --><!-- END_RATING_GRAPH:lichess -->` to show your Lichess.org graph
@@ -63,9 +64,10 @@ So, you can pass multiple arguments to the `with` key:
 
 Here is my rating data:
 
-<!-- START_SECTION:chess.com -->
+<!-- START_RATING_GRAPH:chess.com -->
 Chess.com rating chart for the last 100 games:
 
+```ascii
  2470.00  ┤
  2449.19  ┼╮    ╭╮╭╮
  2428.38  ┤╰╮   │╰╯│      ╭╮
@@ -88,12 +90,13 @@ Chess.com rating chart for the last 100 games:
  2074.62  ┤                                                                                           │   ╭───
  2053.81  ┤                                                                                           │ ╭─╯
  2033.00  ┤                                                                                           ╰─╯
-<!-- END_SECTION:chess.com -->
+```
+<!-- END_RATING_GRAPH:chess.com -->
 
-
-<!-- START_SECTION:lichess -->
+<!-- START_RATING_GRAPH:lichess -->
 Lichess rating chart for the last 100 games:
 
+```ascii
  2631.00  ┤                                         ╭╮
  2627.90  ┤                                       ╭╮││
  2624.81  ┤                                      ╭╯╰╯╰╮        ╭╮
@@ -116,4 +119,5 @@ Lichess rating chart for the last 100 games:
  2572.19  ┤│╰╮╭╮│                 ╰╯ ╰╯
  2569.10  ┼╯ ╰╯╰╯
  2566.00  ┤
-<!-- END_SECTION:lichess -->
+```
+<!-- END_RATING_GRAPH:lichess -->

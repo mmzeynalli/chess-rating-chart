@@ -1,18 +1,37 @@
 import json
+from typing import TYPE_CHECKING
 
 import asciichartpy as ac
 import httpx
 from env import EnvironmentManager as EM
 
 
-class ChessComManager:
+class ChessManager:
+    @classmethod
+    def get_ratings_plot(cls):
+        name, games = cls.get_data()
+
+        return (
+            f'{name} rating chart for the last {EM.LAST_N_GAMES} games:\n'
+            + '\n```ascii\n'
+            + ac.plot(games, {'height': EM.RATING_CHART_HEIGHT})
+            + '\n```'
+        )
+
+    if TYPE_CHECKING:
+
+        @classmethod
+        def get_data(cls) -> tuple[str, list[int]]: ...
+
+
+class ChessComManager(ChessManager):
     USERNAME = EM.CHESS_COM_USERNAME
     TIME_CLASS = EM.CHESS_COM_TIME_CLASS
     URL = f'https://api.chess.com/pub/player/{USERNAME}/games/archives'
     HEADERS = {'User-Agent': 'ChessRatingChart/1.0 miradil.zeynalli@gmail.com'}
 
     @classmethod
-    def get_ratings_plot(cls):
+    def get_data(cls):
         if not cls.USERNAME:
             return
 
@@ -20,9 +39,7 @@ class ChessComManager:
         games = cls.get_filtered_games(archives)
         ratings = cls.get_ratings_from_games(games)
 
-        return f'Chess.com rating chart for the last {EM.LAST_N_GAMES} games:\n\n' + ac.plot(
-            ratings, {'height': EM.RATING_CHART_HEIGHT}
-        )
+        return 'Chess.com', ratings
 
     @classmethod
     def get_archives(cls):
@@ -72,23 +89,21 @@ class ChessComManager:
         ][::-1]
 
 
-class LichessManager:
+class LichessManager(ChessManager):
     USERNAME = EM.LICHESS_USERNAME
     TIME_CLASS = EM.LICHESS_TIME_CLASS
     URL = f'https://lichess.org/api/games/user/{USERNAME}?max={EM.LAST_N_GAMES}&png=false&moves=false&tags=false&pgnInJson=true&perfType={TIME_CLASS},{EM.CHESS_TYPE}'
     HEADERS = {'Accept': 'application/x-ndjson'}
 
     @classmethod
-    def get_ratings_plot(cls):
+    def get_data(cls):
         if not cls.USERNAME:
             return
 
         games = cls.get_filtered_games()
         ratings = cls.get_ratings_from_games(games)
 
-        return f'Lichess rating chart for the last {EM.LAST_N_GAMES} games:\n\n' + ac.plot(
-            ratings, {'height': EM.RATING_CHART_HEIGHT}
-        )
+        return 'Lichess', ratings
 
     @classmethod
     def get_filtered_games(cls) -> list:

@@ -8,6 +8,7 @@ from shutil import copy, rmtree
 from string import ascii_letters
 
 from chess import ChessComManager as CCM
+from chess import ChessManager
 from chess import LichessManager as LCM
 from debug import DebugManager as DBM
 from env import EnvironmentManager as EM
@@ -23,8 +24,8 @@ def init_github_manager():
     Initialize GitHub manager.
     Current user, user readme repo and readme file are downloaded.
     """
-    # GitHubManager.prepare_github_env()
-    # DBM.i(f'Current user: {GitHubManager.USER.login}.')
+    GitHubManager.prepare_github_env()
+    DBM.i(f'Current user: {GitHubManager.USER.login}.')
 
 
 class GitHubManager:
@@ -40,7 +41,7 @@ class GitHubManager:
     _END_COMMENT = '<!--[\\s]*END_RATING_GRAPH:\\2[\\s]*-->'
     _README_REGEX = f'({_START_COMMENT})[\\s\\S]+({_END_COMMENT})'
 
-    TAG_TO_CLASS = {
+    TAG_TO_CLASS: dict[str, type[ChessManager]] = {
         'chess.com': CCM,
         'lichess': LCM,
     }
@@ -119,20 +120,18 @@ class GitHubManager:
         Uses commit author, commit message and branch name specified by environmental variables.
         """
         DBM.i('Updating README...')
-        # readme_path = join(
-        #     GitHubManager.REPO.working_tree_dir, GitHubManager.REMOTE.get_readme().path
-        # )
+        readme_path = join(
+            GitHubManager.REPO.working_tree_dir, GitHubManager.REMOTE.get_readme().path
+        )
 
-        readme_path = 'README.md'
-
-        with open(readme_path, 'r') as readme_file:
+        with open(readme_path, 'r', encoding='utf-8') as readme_file:
             readme_contents = readme_file.read()
 
         def replacer(match: re.Match):
             start = match.group(1)  # <!--START_SECTION:...-->
             end = match.group(3)  # <!--END_SECTION:...-->
 
-            new_data = GitHubManager.TAG_TO_CLASS[match.group(2)].get_ratings_plot()  # type: ignore[attr-defined]
+            new_data = GitHubManager.TAG_TO_CLASS[match.group(2)].get_ratings_plot()
 
             return f'{start}\n{new_data}\n{end}'
 
@@ -141,7 +140,7 @@ class GitHubManager:
         with open(readme_path, 'w', encoding='utf-8') as readme_file:
             readme_file.write(new_readme)
 
-        # GitHubManager.REPO.git.add(readme_path)
+        GitHubManager.REPO.git.add(readme_path)
         DBM.g('README updated!')
 
     @staticmethod

@@ -71,7 +71,6 @@ runs:
       with:
         python-version: '3.11'  
     - name: Install uv
-      shell: bash
       uses: astral-sh/setup-uv@v3
     - name: Install Venv
       shell: bash
@@ -80,8 +79,8 @@ runs:
       shell: bash
       run: uv pip install -r pyproject.toml
     - name: Update README
-      shell: bash
       id: update-readme
+      shell: bash
       run: python src/main.py
 
 branding:

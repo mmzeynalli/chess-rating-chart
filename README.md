@@ -46,8 +46,7 @@ Code structure is inspired by [gautamkrishnar](https://github.com/gautamkrishnar
     ```
 
 5. Replace your usernames. You can give one of them, no need for both.
-6. Go to repository settings, Click on Actions > General. Update the "Workflow permissions" to "Read and write permissions". Click on save.
-   ![Workflow permissions](https://github.com/gautamkrishnar/blog-post-workflow/assets/8397274/26d4c089-dc58-4309-b65a-2acb9a3c08ba)
+6. Go to [here](https://github.com/settings/tokens) and generate token with `repo` access. Put the generated token to repository's secret under `GH_TOKEN`.
 7. Wait for it to run automatically, or you can also trigger it manually to see the result instantly.
 
 ## Extra arguments

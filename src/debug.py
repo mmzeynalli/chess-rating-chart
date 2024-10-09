@@ -3,8 +3,9 @@ from logging import Logger, StreamHandler, getLogger
 from string import Template
 from typing import Dict
 
-from env import EnvironmentManager as EM
 from humanize import precisedelta
+
+from env import EnvironmentManager as EM
 
 
 def init_debug_manager():

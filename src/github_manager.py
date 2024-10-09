@@ -7,16 +7,17 @@ from re import sub
 from shutil import copy, rmtree
 from string import ascii_letters
 
+from git import Actor, Repo
+from github import Github
+from github.AuthenticatedUser import AuthenticatedUser
+from github.Repository import Repository
+
 from chess import ChessComManager as CCM
 from chess import ChessManager
 from chess import LichessManager as LCM
 from debug import DebugManager as DBM
 from env import EnvironmentManager as EM
 from file import FileManager as FM
-from git import Actor, Repo
-from github import Github
-from github.AuthenticatedUser import AuthenticatedUser
-from github.Repository import Repository
 
 
 def init_github_manager():

@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 import asciichartpy as ac
 import httpx
+
 from env import EnvironmentManager as EM
 
 
@@ -14,7 +15,7 @@ class ChessManager:
         return (
             f'{name} rating chart for the last {EM.LAST_N_GAMES} games:\n'
             + '\n```ascii\n'
-            + ac.plot(games, {'height': EM.RATING_CHART_HEIGHT})
+            + ac.plot(games, {'height': EM.RATING_CHART_HEIGHT, 'format': '{:4.0f}'})
             + '\n```'
         )
 

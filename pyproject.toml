@@ -24,6 +24,7 @@ dev-dependencies = [
 [tool.ruff]
 target-version = "py39"
 line-length = 100
+src = ["src"]
 
 [tool.ruff.lint]
 select = [

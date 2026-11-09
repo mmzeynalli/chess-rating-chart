@@ -10,6 +10,7 @@ class EnvironmentManager:
     CHESS_COM_TIME_CLASS = getenv('INPUT_CHESS_COM_TIME_CLASS', 'blitz')
     LICHESS_USERNAME = getenv('INPUT_LICHESS_USERNAME')
     LICHESS_TIME_CLASS = getenv('INPUT_LICHESS_TIME_CLASS', 'blitz')
+    LICHESS_TOKEN = getenv('INPUT_LICHESS_TOKEN', '')
 
     CHESS_TYPE = getenv('INPUT_CHESS_TYPE', 'chess')
     LAST_N_GAMES = int(getenv('INPUT_LAST_N_GAMES', 100))

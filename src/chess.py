@@ -94,7 +94,12 @@ class LichessManager(ChessManager):
     USERNAME = EM.LICHESS_USERNAME
     TIME_CLASS = EM.LICHESS_TIME_CLASS
     URL = f'https://lichess.org/api/games/user/{USERNAME}?max={EM.LAST_N_GAMES}&pgn=false&moves=false&tags=false&pgnInJson=true&perfType={TIME_CLASS}'
-    HEADERS = {'Accept': 'application/x-ndjson'}
+    HEADERS = {
+        'Accept': 'application/x-ndjson',
+        'User-Agent': 'ChessRatingChart/1.0 (https://github.com/mmzeynalli/chess-rating-chart)',
+    }
+    if EM.LICHESS_TOKEN:
+        HEADERS['Authorization'] = f'Bearer {EM.LICHESS_TOKEN}'
 
     @classmethod
     def get_data(cls):
@@ -113,7 +118,8 @@ class LichessManager(ChessManager):
 
         if response.status_code != 200:
             raise RuntimeError(
-                f'Lichess API returned HTTP {response.status_code}: {response.text[:500]}'
+                f'Lichess API returned HTTP {response.status_code} for {cls.URL}: '
+                f'{response.text[:500]}'
             )
 
         games = []

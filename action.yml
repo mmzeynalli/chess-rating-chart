@@ -23,6 +23,11 @@ inputs:
     required: false
     default: ""
 
+  LICHESS_TOKEN:
+    description: 'Optional Lichess API token (no scopes needed). Avoids anonymous request blocking/rate limits'
+    required: false
+    default: ""
+
   LICHESS_TIME_CLASS:
     description: 'Lichess time class to graph  ("ultraBullet", :, "blitz", "rapid", "classical", "correspondence")'
     required: false

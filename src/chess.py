@@ -93,7 +93,7 @@ class ChessComManager(ChessManager):
 class LichessManager(ChessManager):
     USERNAME = EM.LICHESS_USERNAME
     TIME_CLASS = EM.LICHESS_TIME_CLASS
-    URL = f'https://lichess.org/api/games/user/{USERNAME}?max={EM.LAST_N_GAMES}&png=false&moves=false&tags=false&pgnInJson=true&perfType={TIME_CLASS},{EM.CHESS_TYPE}'
+    URL = f'https://lichess.org/api/games/user/{USERNAME}?max={EM.LAST_N_GAMES}&pgn=false&moves=false&tags=false&pgnInJson=true&perfType={TIME_CLASS}'
     HEADERS = {'Accept': 'application/x-ndjson'}
 
     @classmethod
@@ -108,16 +108,35 @@ class LichessManager(ChessManager):
 
     @classmethod
     def get_filtered_games(cls) -> list:
-        with httpx.Client(timeout=10) as client:
-            ndjson_data = (client.get(url=cls.URL, headers=cls.HEADERS)).content
+        with httpx.Client(timeout=30) as client:
+            response = client.get(url=cls.URL, headers=cls.HEADERS)
 
-        return [json.loads(line) for line in ndjson_data.splitlines()]
+        if response.status_code != 200:
+            raise RuntimeError(
+                f'Lichess API returned HTTP {response.status_code}: {response.text[:500]}'
+            )
+
+        games = []
+        for line in response.content.splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            if 'players' not in data:
+                print(f'Skipping unexpected Lichess response line: {str(data)[:200]}')
+                continue
+            games.append(data)
+
+        return games
 
     @classmethod
     def get_ratings_from_games(cls, games: list) -> list:
-        return [
-            game['players']['white']['rating']
-            if game['players']['white']['user']['name'] == cls.USERNAME
-            else game['players']['black']['rating']
-            for game in games
-        ]
+        username = (cls.USERNAME or '').lower()
+        ratings = []
+        for game in games:
+            for color in ('white', 'black'):
+                player = game['players'].get(color, {})
+                name = player.get('user', {}).get('name', '')
+                if name.lower() == username and 'rating' in player:
+                    ratings.append(player['rating'])
+                    break
+        return ratings
